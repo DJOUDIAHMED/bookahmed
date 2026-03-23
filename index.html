@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Albert Camus - ألبرت كامو</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #2c1810 0%, #1a0f0b 50%, #3d2b1f 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        .book-container {
+            position: relative;
+            width: 400px;
+            height: 500px;
+            transform-style: preserve-3d;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .book {
+            position: absolute;
+            width: 400px;
+            height: 500px;
+            transform-style: preserve-3d;
+            transition: transform 0.8s ease;
+        }
+
+        .book:hover {
+            transform: rotateY(-15deg) rotateX(5deg);
+        }
+
+        /* الغلاف الأمامي */
+        .book-cover {
+            position: absolute;
+            width: 400px;
+            height: 500px;
+            background: linear-gradient(145deg, #8B4513 0%, #654321 50%, #A0522D 100%);
+            border: 8px solid #5D4037;
+            box-shadow: 
+                20px 20px 40px rgba(0,0,0,0.6),
+                inset 0 0 20px rgba(255,255,255,0.1);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #F5DEB3;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            backface-visibility: hidden;
+        }
+
+        .title-main {
+            font-size: 32px;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #DAA520, #B8860B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-arabic {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #FFF8DC;
+        }
+
+        .author {
+            font-size: 20px;
+            color: #DEB887;
+            margin-bottom: 30px;
+        }
+
+        .dedication {
+            font-size: 16px;
+            color: #F4A460;
+            padding: 0 20px;
+            line-height: 1.4;
+        }
+
+        /* الحواف الجانبية */
+        .book-edge-top {
+            position: absolute;
+            width: 416px;
+            height: 20px;
+            background: linear-gradient(90deg, #D2691E, #CD853F, #D2691E);
+            top: -8px;
+            left: -8px;
+            border-radius: 10px 10px 0 0;
+            transform-origin: top;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+
+        .book-edge-bottom {
+            position: absolute;
+            width: 416px;
+            height: 20px;
+            background: linear-gradient(90deg, #8B4513, #A0522D, #8B4513);
+            bottom: -8px;
+            left: -8px;
+            border-radius: 0 0 10px 10px;
+            transform-origin: bottom;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.4);
+        }
+
+        .book-edge-side {
+            position: absolute;
+            width: 20px;
+            height: 500px;
+            background: linear-gradient(180deg, #654321, #8B4513, #654321);
+            right: -8px;
+            top: -8px;
+            border-radius: 0 15px 15px 0;
+            transform-origin: right;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.4);
+        }
+
+        /* زر الدخول */
+        .enter-btn {
+            position: absolute;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%) translateZ(50px);
+            width: 200px;
+            height: 60px;
+            background: linear-gradient(145deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
+            border: none;
+            border-radius: 30px;
+            color: #000;
+            font-family: 'Cairo', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 
+                0 10px 30px rgba(255, 215, 0, 0.4),
+                inset 0 5px 10px rgba(255,255,255,0.3),
+                inset 0 -5px 10px rgba(255,165,0,0.3);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .enter-btn:hover {
+            transform: translateX(-50%) translateZ(70px) scale(1.05);
+            box-shadow: 
+                0 15px 40px rgba(255, 215, 0, 0.6),
+                inset 0 5px 10px rgba(255,255,255,0.4);
+            background: linear-gradient(145deg, #FFEA00 0%, #FFB347 50%, #FF8C00 100%);
+        }
+
+        .enter-btn:active {
+            transform: translateX(-50%) translateZ(40px) scale(0.98);
+            box-shadow: 
+                0 5px 20px rgba(255, 215, 0, 0.4),
+                inset 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* تأثيرات الإضاءة والحركة */
+        @keyframes float {
+            0%, 100% { transform: rotateX(2deg) rotateY(2deg) translateY(0px); }
+            50% { transform: rotateX(-2deg) rotateY(-2deg) translateY(-10px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.6); }
+        }
+
+        .book-container:hover .enter-btn {
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        /* صفحات الكتاب */
+        .pages {
+            position: absolute;
+            width: 380px;
+            height: 460px;
+            background: repeating-linear-gradient(
+                90deg,
+                rgba(255,255,255,0.9) 0px,
+                rgba(255,255,255,0.9) 2px,
+                rgba(250,245,240,0.8) 2px,
+                rgba(250,245,240,0.8) 4px
+            );
+            top: 10px;
+            left: 10px;
+            border-radius: 8px;
+            opacity: 0.3;
+            transform-origin: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="book-container">
+        <div class="book">
+            <!-- حواف الكتاب -->
+            <div class="book-edge-top"></div>
+            <div class="book-edge-bottom"></div>
+            <div class="book-edge-side"></div>
+            
+            <!-- صفحات الكتاب -->
+            <div class="pages"></div>
+            
+            <!-- غلاف الكتاب -->
+            <div class="book-cover">
+                <div class="title-main">ALBERT CAMUS</div>
+                <div class="title-arabic">ألبرت كامو</div>
+                <div class="author">كتاب لـ</div>
+                <div class="dedication">الأستاذ: جودي محمد الصالح</div>
+            </div>
+        </div>
+        
+        <!-- زر الدخول يؤدي إلى albert_camus.html -->
+        <a href="albert_camus.html">
+            <button class="enter-btn">دخول</button>
+        </a>
+    </div>
+</body>
+</html>
